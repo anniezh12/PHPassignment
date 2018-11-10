@@ -11,7 +11,7 @@
 <div class="jumbotron">
 	<b>CONTEXT</b>
 <br>
-A core part of RocketBlocks functionality is allowing candidates to drill themselves on case style
+A core part of this apps functionality is allowing candidates to drill themselves on case style
 interview questions.
 <br>As a result, displaying a question, saving the answer and showing the suggested answer is a
 key piece of functionality.<br> This functionality is used in many different permutations and styles
