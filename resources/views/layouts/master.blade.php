@@ -38,6 +38,7 @@ $(function() {
     </ul>
   </div>
 </nav>
+
 </head>
 <body>
 	<div class="container">
