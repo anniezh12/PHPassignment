@@ -37,3 +37,4 @@ Route::get('/solutions/getQuestions','SolutionController@getQuestions');
 // Route::get('/solutions','SolutionController@index');
 
 Route::resource('questions','QuestionsController');
+Route::resource('items','ItemsController');
