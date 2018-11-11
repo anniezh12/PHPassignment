@@ -13,7 +13,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return "Item Created";
+        return "Item Created in index";
         //return view('questions.index')->with('questions', $questions);
         
     }

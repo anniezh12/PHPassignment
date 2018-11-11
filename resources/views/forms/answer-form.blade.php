@@ -1,18 +1,42 @@
+<p><div class='card bg-light mb-3 style='min-width:50%'>
+	<div class='card-header'>Enter Answer</div>
+	<div class='card-body'><p class='card-text'>
+		<form id='answerform' method='/items' action='#'>
+			<div class='row '>
+			<div class='col-md-4'><label name='category'>Category(s):</label></div>
+			<div class='col-md-4'><label name='category'>Item(s):</label></div>
+		</div>
+		
+		<div class='row'><div class='col-md-4'>
+			
+			<input type='text' placeholder='Category'>
+		</div>
+		<div class='col-md-4'>
+			<input type='text' placeholder='Item'>
+		</div>
+	</div>
+	<div id='displaynewitemfield'>
 
+		<!-- New Text box will be added in this div-->
 
-			{!! Form::open(['url' => '/']) !!}
-			<div class="form-group">
-				<div class="row col-md-auto">
-			 {{Form::label('categorie', 'Categorie(s)')}}
-			 {{Form::text('category','')}}
-			</div>
-			<div class="col-md-auto">
-			 {{Form::label('item', 'Item(s)')}}
-			 {{Form::text('item','')}}
-			</div>
-			</div>
-			{{Form::submit('Submit')}}
-
-			    
-			{!! Form::close() !!}
-						
+	</div>
+	<div class='row'>
+		<div class='col-md-4'></div>
+		<div class='col-md-4'>
+			<div id='item-add-btn' class='link-color-blue' onclick='addItem()'>Add Item </div>
+			<div id='item-add-btn' class='link-color' onclick='addAnswer()'>Add Answer </div>
+			<input type='submit' id='sub' value='Submit Answer'>
+		</form>
+		<br><div id="itemData"></div>
+	</div>
+</div>
+</p>
+</div>
+<p><div id="dis"></div>
+	<div class='row'>
+		<div class='col-md-4'>
+			<div class='link' onclick='addCategoryWithItems()'> Add Category</div>
+			<div class='col-md-4'></div>
+		</div>
+	</div>
+		</div>
