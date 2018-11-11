@@ -36,20 +36,21 @@
       funcy();
      }
 
-     // function addAnswer(){
+     // following function will take care of the answer submitted through form
      $(document).ready(function(){
-      $('#sub').on('click',function(e){
+      $('#answerform').on('click',function(e){
                e.preventDefault();
+               let category = $('#category').val();
+               let item =$('#item').val();
+               console.log(category,item);
+               //create a category object and then items. First I will create a category once a user submits data. after creating a category I will get the category_id which will then be used to send this number along with the contents for the item and will create items.
            $.ajax({
                type:'GET',
                url:'/items',
                data:'_token = <?php echo csrf_token() ?>',
                success:function(data){
                 //alert("hello addAnswer")
-                $('#dis').html(" thanks Allah "+data);
-               
-   
-     }
+                $('#dis').html(" thanks Allah "+data);  }
      });
          });
     });

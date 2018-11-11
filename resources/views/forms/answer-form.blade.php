@@ -3,16 +3,16 @@
 	<div class='card-body'><p class='card-text'>
 		<form id='answerform' method='/items' action='#'>
 			<div class='row '>
-			<div class='col-md-4'><label name='category'>Category(s):</label></div>
-			<div class='col-md-4'><label name='category'>Item(s):</label></div>
+			<div class='col-md-4'><label >Category(s):</label></div>
+			<div class='col-md-4'><label >Item(s):</label></div>
 		</div>
 		
 		<div class='row'><div class='col-md-4'>
 			
-			<input type='text' placeholder='Category'>
+			<input type='text' id='category' placeholder='Category'>
 		</div>
 		<div class='col-md-4'>
-			<input type='text' placeholder='Item'>
+			<input type='text' id='item' placeholder='Item'>
 		</div>
 	</div>
 	<div id='displaynewitemfield'>
