@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->mediumtext('content');
             $table->integer('user_id');
             $table->integer('category_id');
+            $table->integer('question_id');
             $table->timestamps();
         });
     }

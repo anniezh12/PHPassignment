@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\item;
 class ItemsController extends Controller
 {
     /**
@@ -17,6 +17,8 @@ class ItemsController extends Controller
         //return view('questions.index')->with('questions', $questions);
         
     }
+
+     
 
     /**
      * Show the form for creating a new resource.
@@ -34,9 +36,17 @@ class ItemsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function submit(Request $request)
     {
-        return "Item Created";
+    $item = new item;
+    $item->content =  $request->content;
+    $item->user_id =  $request->user_id;
+    $item->category_id =  $request->category_id;
+    $item->question_id =  $request->question_id;
+
+     $item->save();
+     return $item;
+        
     }
 
     /**

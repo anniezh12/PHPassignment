@@ -1,7 +1,7 @@
 <html>
 <title>Containg Solution</title>
 <head>
-	
+  
     
 </head>
 <body  style="background-color:white !important">
@@ -10,59 +10,73 @@
 @section('contents')
 <!--all the code related to this file will go between section tag-->
  <script> 
-
-
-  	function funcy(){    
-  	$.ajax({
+  $(document).ready(function(){
+    $('#start').on('click',function(){  
+    $.ajax({
                type:'GET',
                url:'/questions',
                data:'_token = <?php echo csrf_token() ?>',
                success:function(data){
-               	              $("#displayquestion").html("<p><div class='text-secondary'><h3><b>"+data.title+"</b></h3></div><div class='text-muted'>Category: "+data.category+"</div>"+data.prob);
+                alert("hello") ;
+                              $("#displayquestion").html("<p><div class='text-secondary'> <input type='hidden' id='questionId' value='"+data.id+"'/> <h3><b>"+data.title+"</b></h3></div><div class='text-muted'>Category: "+data.category+"</div>"+data.prob);
             }
             });
-  }
+  
+});
   // addItem() function will add an item field when button is clicked
+     $('#additem').on('click',function(){
+      var lastCat = $('#FormDiv > div:first-child > input[type="text"]:last-child'); 
+       console.log(lastCat.val());
+     var lastitem = $('#FormDiv > div:last-child > input[type="text"]:last-child'); 
+      console.log(lastitem.val());
+if(lastCat.val() == ''){
+  $("#errorMsg").html("Please fill category first!")
+}
+else if(lastitem.val() == ''){
+  $("#errorMsg").html("Please fill item first!")
+}
+else{
+  var qid = $('#questionId').val();
 
-
-     function addItem()
-     {
-      $('#displaynewitemfield').append("<div class='row '><div class='col-md-4'></div><div class='col-md-4'> <br> <input type='text' value='Item'></div>");
-     }
-
-     function addCategoryWithItems()
-     {
-      //I called funcy() again and displayed it in another div
-      funcy();
-     }
-
-     // following function will take care of the answer submitted through form
-     $(document).ready(function(){
-      $('#answerform').on('click',function(e){
-               e.preventDefault();
-               let category = $('#category').val();
-               let item =$('#item').val();
-               console.log(category,item);
-               //create a category object and then items. First I will create a category once a user submits data. after creating a category I will get the category_id which will then be used to send this number along with the contents for the item and will create items.
-           $.ajax({
-               type:'GET',
-               url:'/items',
-               data:'_token = <?php echo csrf_token() ?>',
+ // alert(qid);
+   $.ajax({
+                type:'POST',
+                url:'/categories/submit',
+              data: {'title': lastCat.val(),'question_id': qid, _token: '{{csrf_token()}}'
+},
                success:function(data){
-                //alert("hello addAnswer")
-                $('#dis').html(" thanks Allah "+data);  }
+                 $("#CatId").val(data.id);
+                $('#displaynewitemfield').append("<div class='row '><div class='col-md-4'></div><div class='col-md-4'> <br> <input type='text' value='Item'> </div>");
+               // $('#dis').html(data);
+                  }
+
+
+
      });
-         });
+
+// Foolowing ajax will send data to items@store method
+    $.ajax({
+                type:'POST',
+                url:'/items/submit',
+              data: {'content': lastitem.val(),'user_id':123,'category_id': $("#CatId").val(),'question_id': qid, _token: '{{csrf_token()}}'},
+               success:function(data){
+                alert(data.id);
+               //  $("#CatId").val(data.id);
+               //  $('#displaynewitemfield').append("<div class='row '><div class='col-md-4'></div><div class='col-md-4'> <br> <input type='text' value='Item'> </div>");
+               // // $('#dis').html(data);
+                  }
+      });
+   
+     
+   }
     });
      
-
-
-   
+   });
          </script>
 
 <div id="questionFromBrainStromTable"></div>
 <div class = "container">
-	@include('inc.error-messages')
+  @include('inc.error-messages')
  
 </div>
 
@@ -78,7 +92,7 @@
 
 <p>
   <div class="container">
-	<input  type="button"  value="Start Test"  onclick="funcy()">
+  <input  type="button"  value="Start Test"  id="start">
   
   </div>
   

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Question;
-class QuestionsController extends Controller
+use App\Category;
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,13 +13,7 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        //$questions = Question::orderBy('brain_id','desc')->paginate(1);
-        // $questions = Question::orderBy('brain_id','desc')->take(1)->get();
-        $questions = Question::all();
-        return $questions[3];
-        //echo $q[0]->prob;
-       // return view('questions.index')->with('questions', $questions);
-        
+        return "abc";
     }
 
     /**
@@ -38,9 +32,16 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function submit(Request $request)
     {
-        //
+        $category = new Category;
+    $category->title =  $request->title;
+    $category->question_id =  $request->question_id;
+
+     $category->save();
+     return $category;
+
+
     }
 
     /**
