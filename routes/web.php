@@ -37,9 +37,10 @@ Route::get('/solutions/getQuestions','SolutionController@getQuestions');
 // Route::get('/solutions','SolutionController@index');
 //Route::post('/categories/store','CategoriesController@store')
 Route::resource('questions','QuestionsController');
-//Route::resource('categories','CategoriesController');
+Route::resource('categories','CategoriesController');
 Route::get('/categories/submit','CategoriesController@submit');
 Route::post('/categories/submit','CategoriesController@submit');
 Route::resource('items','ItemsController');
 Route::get('/items/submit','ItemsController@submit');
 Route::post('/items/submit','ItemsController@submit');
+Route::get('/displayAnswer','SolutionController@displayAnswer');

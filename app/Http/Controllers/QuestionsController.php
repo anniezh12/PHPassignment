@@ -11,16 +11,51 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+   
+  
+               public function index()
     {
+ global $arrayOfRandomNumners;
+         $GLOBALS['arrayOfRandomNumners'] = array();
+
         //$questions = Question::orderBy('brain_id','desc')->paginate(1);
         // $questions = Question::orderBy('brain_id','desc')->take(1)->get();
-        $questions = Question::all();
-        return $questions[3];
-        //echo $q[0]->prob;
-       // return view('questions.index')->with('questions', $questions);
-        
+
+       // $questions = shuffle(Question::all());
+        $GLOBALS['arrayOfRandomNumners'] = session('newArr');
+
+
+        for($i=1;$i<=count($questions);$i++)
+        {
+            $random_number = rand(0,count($questions)-1);   
+         
+           if(empty($GLOBALS['arrayOfRandomNumners']))
+           {
+             $GLOBALS['arrayOfRandomNumners'] = array();
+            array_push($GLOBALS['arrayOfRandomNumners'],$random_number);
+            session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
+            return $questions[$random_number];
+           }
+
+        else if(count($GLOBALS['arrayOfRandomNumners'])===count($questions))
+        {    
+            $GLOBALS['arrayOfRandomNumners'] = array();
+             session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
+            return new Question();
+        }
+
+       else if (!in_array($random_number,$GLOBALS['arrayOfRandomNumners']))
+  {
+     echo $random_number;
+         array_push($GLOBALS['arrayOfRandomNumners'],$random_number);
+          session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
+         return $questions[$random_number];
+                
     }
+    
+}
+   
+}
 
     /**
      * Show the form for creating a new resource.
