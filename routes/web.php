@@ -44,3 +44,5 @@ Route::resource('items','ItemsController');
 Route::get('/items/submit','ItemsController@submit');
 Route::post('/items/submit','ItemsController@submit');
 Route::get('/displayAnswer','SolutionController@displayAnswer');
+
+Route::get('/abc','QuestionsController@session_access');

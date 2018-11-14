@@ -10,15 +10,46 @@
 @section('contents')
 <!--All of the code related to this file will go between section tag-->
  <script> 
+
+function incTimer() {
+        var currentMinutes = Math.floor(totalSecs / 60);
+        var currentSeconds = totalSecs % 60;
+        if(currentSeconds <= 9) currentSeconds = "0" + currentSeconds;
+        if(currentMinutes <= 9) currentMinutes = "0" + currentMinutes;
+        totalSecs++;
+        $("#timer").text(currentMinutes + ":" + currentSeconds);
+        setTimeout('incTimer()', 1000);
+    }
+    totalSecs = 0;
+
   $(document).ready(function(){
+
+
+
+
     //Start button will fetch question from questions table and will append in a div
+     $.ajax({
+               type:'GET',
+               url:'/abc',
+               data:'_token = <?php echo csrf_token() ?>',
+               success:function(data){
+               console.log(data);
+                              
+            }
+            });
+
     $('#start').on('click',function(){  
+//Start timer 
+incTimer();
     $.ajax({
                type:'GET',
                url:'/questions',
                data:'_token = <?php echo csrf_token() ?>',
                success:function(data){
-               
+               console.log(data);
+               if(data == "Question completed")
+                alert("Test completed");
+              else
                               $("#displayquestion").html("<p><div class='text-secondary'> <input type='hidden' id='questionId' value='"+data.id+"'/> <h3><b>"+data.title+"</b></h3></div><div class='text-muted'>Category: "+data.category+"</div>"+data.prob);
             }
             });
@@ -101,10 +132,12 @@ if($("#CatId").val() == "0"){
 $.ajax({
                 type:'GET',
                 url:'/displayAnswer',
-              data: '_token = <?php echo csrf_token() ?>',
-               
+              data: {'time':  $("#timer").text(),'user_id':123,'question_id':  $('#questionId').val(), _token: '{{csrf_token()}}'},
+              
                success:function(data){
                $("#displayingBothCategoryAndItem").css('display','block');
+               
+              // after getting data from SolutionsController/displayAnswer I made a check to display both Categories and their associated ids
 
                for(var i=0 ; i< data.length; i++){
                  $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<b>"+data[i].title+"</b>");
@@ -139,11 +172,11 @@ $.ajax({
 
 </div>
 
-
+<div id="timer">Hello</div>
 
 
   <div class="container">
-  <input  type="button"  value="Start Test"  id="start">
+  <input  class='btn btn-link'  value="Start Test"  id="start">
    
   
 @include('forms.answer-form')

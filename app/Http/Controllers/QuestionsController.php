@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use  Illuminate\Support\Collection;
 use App\Question;
 class QuestionsController extends Controller
 {
@@ -11,115 +12,43 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+  // public static $ques;
+
+    public function session_access() 
+    {
+        
+        // Fetch All Questions in random order and assign to a session variable sessionQuestion
+        $ques = array();
+        $ques =Question::inRandomOrder()->get();
+        session(['sessionQuestion' => $ques]);
+      }
+
    
   
-               public function index()
-    {
- global $arrayOfRandomNumners;
-         $GLOBALS['arrayOfRandomNumners'] = array();
-
-        //$questions = Question::orderBy('brain_id','desc')->paginate(1);
-        // $questions = Question::orderBy('brain_id','desc')->take(1)->get();
-
-       // $questions = shuffle(Question::all());
-        $GLOBALS['arrayOfRandomNumners'] = session('newArr');
-
-
-        for($i=1;$i<=count($questions);$i++)
-        {
-            $random_number = rand(0,count($questions)-1);   
-         
-           if(empty($GLOBALS['arrayOfRandomNumners']))
-           {
-             $GLOBALS['arrayOfRandomNumners'] = array();
-            array_push($GLOBALS['arrayOfRandomNumners'],$random_number);
-            session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
-            return $questions[$random_number];
-           }
-
-        else if(count($GLOBALS['arrayOfRandomNumners'])===count($questions))
-        {    
-            $GLOBALS['arrayOfRandomNumners'] = array();
-             session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
-            return new Question();
-        }
-
-       else if (!in_array($random_number,$GLOBALS['arrayOfRandomNumners']))
-  {
-     echo $random_number;
-         array_push($GLOBALS['arrayOfRandomNumners'],$random_number);
-          session(['newArr' => $GLOBALS['arrayOfRandomNumners']]);
-         return $questions[$random_number];
-                
-    }
+    public function index()
     
+       
+    {
+        $Questions = session('sessionQuestion');
+        if(count($Questions) > 0)
+           {
+            foreach(session('sessionQuestion') as $key=>$value)
+                {
+                    $i =0;
+                    if($i == 0 && (count($Questions)) > 0){
+                        unset($Questions[$key]);
+                         session(['sessionQuestion' =>$Questions]);
+                        return $value;
+                    }
+
+                
+                }
 }
+     else {
+                    return "Question completed";
+           }
    
 }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+   
 }

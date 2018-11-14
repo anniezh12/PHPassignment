@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Question;
+use App\brainstorm_responses;
 class CategoriesController extends Controller
 {
     /**
@@ -14,17 +15,24 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-global $arrayOfRandomNumners;
-         $GLOBALS['arrayOfRandomNumners'] = array();
+           $userResponses = brainstorm_responses::all();
+           $questions = Question::all();
+           return is_object($questions)?'true':'false';
+           $newArr =array();
+           for($i=0;$i<count($userResponses);$i++)
+           {
+            array_push($newArr,$userResponses[$i]->brain_id);
+           }
+           return $newArr;
 
-        //$questions = Question::orderBy('brain_id','desc')->paginate(1);
-        // $questions = Question::orderBy('brain_id','desc')->take(1)->get();
-
-        $que = Question::all();
-        $questions = shuffle($que);
-        $GLOBALS['arrayOfRandomNumners'] = session('questions');
-             return  $GLOBALS['arrayOfRandomNumners'];
-         }
+//            $ids = array_map(function($item) {
+//     return $item[0];
+// }, $data);
+           
+            // $newArr = array_map(function($el){
+            //  return  $el-brain_id; }, $userResponses);
+            return is_object($userResponses)?"true":"false";
+       }
 
     /**
      * Show the form for creating a new resource.
