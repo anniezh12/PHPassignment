@@ -46,3 +46,5 @@ Route::post('/items/submit','ItemsController@submit');
 Route::get('/displayAnswer','SolutionController@displayAnswer');
 
 Route::get('/abc','QuestionsController@session_access');
+Route::get('/saveResponse','brainStormResponsesController@saveResponse');
+

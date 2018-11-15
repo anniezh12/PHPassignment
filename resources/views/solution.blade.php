@@ -9,7 +9,9 @@
 
 @section('contents')
 <!--All of the code related to this file will go between section tag-->
- <script> 
+ <script>
+
+// Timer Function
 
 function incTimer() {
         var currentMinutes = Math.floor(totalSecs / 60);
@@ -22,12 +24,36 @@ function incTimer() {
     }
     totalSecs = 0;
 
+    // Date Function
+
+    function gettingDate(){
+
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd = '0'+dd
+        } 
+
+        if(mm<10) {
+            mm = '0'+mm
+        } 
+
+        today = mm + '/' + dd + '/' + yyyy;
+      
+    }
+
+    // Document.ready part of script
+
   $(document).ready(function(){
 
 
 
 
-    //Start button will fetch question from questions table and will append in a div
+    //Start button will fetch question from questions table and will append them in a div
+
      $.ajax({
                type:'GET',
                url:'/abc',
@@ -39,8 +65,18 @@ function incTimer() {
             });
 
     $('#start').on('click',function(){  
-//Start timer 
-incTimer();
+
+       // call to incTimer() will start a timer for a question
+
+        incTimer();
+
+        // call to gettingDate() will fetch current date to be inserted in the brainstorm_responses table
+
+        gettingDate();
+
+
+// questions will be fetched and displayed using following ajax
+
     $.ajax({
                type:'GET',
                url:'/questions',
@@ -129,6 +165,23 @@ if($("#CatId").val() == "0"){
      }
      //end of AddItem
      $('#submitAnswer').on('click',function(){
+
+      // User response to a question will be saved to brainstorm_responses table using following Ajax method. Call will be made to brainStormResponsesController's saveResponse() method 
+
+      $.ajax({
+
+                type:'POST',
+                url:'/saveResponse',
+           data: {'brain_id':  $('#questionId').val(),'answer':'yourr answer','time':  $("#timer").text(),'user_id':123,'date':'10-2-1981', _token: '{{csrf_token()}}'},
+              
+               success:function(data){
+                alert(data);
+              }
+
+      });
+   
+    // In order to display User's response a call to SolutionController@displayAnswer will be made using following Ajax method and then results will be displayed
+
 $.ajax({
                 type:'GET',
                 url:'/displayAnswer',
@@ -164,6 +217,7 @@ $.ajax({
 
 <div id="questionFromBrainStromTable" ></div>
 <div class = "container">
+
   @include('inc.error-messages')
  
 </div>
