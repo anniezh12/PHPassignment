@@ -67,12 +67,12 @@ function incTimer() {
     $('#start').on('click',function(){  
 
        // call to incTimer() will start a timer for a question
-
+totalSecs = 0;
         incTimer();
 
         // call to gettingDate() will fetch current date to be inserted in the brainstorm_responses table
 
-        gettingDate();
+        //gettingDate();
 
 
 // questions will be fetched and displayed using following ajax
@@ -83,10 +83,18 @@ function incTimer() {
                data:'_token = <?php echo csrf_token() ?>',
                success:function(data){
                console.log(data);
-               if(data == "Question completed")
-                alert("Test completed");
-              else
+               if(data == "Question completed"){
+ alert("Test completed");
+   $("#start").val("Start Test");
+    $("#start").prop('disabled', true);
+               }
+               
+              else{
+
                               $("#displayquestion").html("<p><div class='text-secondary'> <input type='hidden' id='questionId' value='"+data.id+"'/> <h3><b>"+data.title+"</b></h3></div><div class='text-muted'>Category: "+data.category+"</div>"+data.prob);
+                            $("#start").val("Next Question");
+                              $("#start").prop('disabled', true);
+                          }
             }
             });
   
@@ -95,9 +103,9 @@ function incTimer() {
 
      $('#additem').on('click',function(){
       //lastCat contains category text field contents
-      var lastCat = $('#FormDiv > div:first-child > input[type="text"]:last-child'); 
+      var lastCat = $('#FormDiv > div:last-child > .categorydiv > input[type="text"]'); 
       //lastitem contains item text field contents
-     var lastitem = $('#FormDiv > div:last-child > input[type="text"]:last-child'); 
+     var lastitem = $('#FormDiv > div:last-child > .itemsdiv > input[type="text"]:last-child'); 
      // following if statement will take care of empty fields
 if(lastCat.val() == ''){
   $("#errorMsg").html("Please add a category first!")
@@ -108,7 +116,6 @@ else if(lastitem.val() == ''){
 else{
   var qid = $('#questionId').val();
 // if CatId(hidden field) value is 0 then add category
-alert($("#CatId").val())
 
 if($("#CatId").val() != "0")
 {
@@ -143,11 +150,49 @@ if($("#CatId").val() == "0"){
      $('#addCategoryDiv').on('click',function(){
 
       $('#CatId').val("0");
-
- $('.categorydiv').append(" <br> <input type='text' placeholder='Category'> ");
- $('.itemsdiv').append(" <br> <input type='text' placeholder='Item'> ");
+//'#FormDiv > div:last-child > div:first-child > input[type="text"]:last-child
+$('#FormDiv').append("<div class='row' style='margin-top:15px'><div class='col-md-4 categorydiv'><input type='text' class='form-control' placeholder='Category'> </div> <div class='col-md-8 itemsdiv'> <input type='text' class='form-control' placeholder='Item'></div></div>");
+ 
+ //$('#FormDiv >div:last-child > .categorydiv').append(" <br> <input type='text' class='form-control' placeholder='Category'> ");
+ //$('.itemsdiv').append(" <br> <input type='text' class='form-control' placeholder='Item'> ");
 
      })
+
+function GetAnswer(){
+  $.ajax({
+                type:'GET',
+                url:'/displayAnswer',
+              data: {'time':  $("#timer").text(),'user_id':123,'question_id':  $('#questionId').val(), _token: '{{csrf_token()}}'},
+              
+               success:function(data){
+                
+               $("#displayingBothCategoryAndItem").css('display','block');
+               var item = {};
+              // after getting data from SolutionsController/displayAnswer I made a check to display both Categories and their associated ids
+
+               for(var i=0 ; i< data.length; i++){
+
+          for (var a =0; a < item.length;a++)
+          {
+                if(){
+                      item[i]= data.title;
+                   $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<b>"+data[i].title+"</b>");
+
+                   for(var j=0; j< data.length; j++){
+
+                    if(data[j].id == data[i].id){
+                       $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<hr /><p>"+data[i].content+"</p>");
+                    }
+                  }
+                 }
+               }
+               }
+                console.log(data[0]);
+                
+              
+                  }
+})
+}
 
      function AddItem(lastitem, qid){
        $.ajax({
@@ -156,7 +201,7 @@ if($("#CatId").val() == "0"){
               data: {'content': lastitem,'user_id':123,'category_id': $("#CatId").val(),'question_id': qid, _token: '{{csrf_token()}}'},
                success:function(data){
                 console.log(data)
-                $('.itemsdiv').append(" <br> <input type='text' placeholder='Item'> ");
+                $('#FormDiv > div:last-child > .itemsdiv').append(" <br> <input type='text' class='form-control' placeholder='Item'> ");
                //  $("#CatId").val(data.id);
                //  $('#displaynewitemfield').append("<div class='row '><div class='col-md-4'></div><div class='col-md-4'> <br> <input type='text' value='Item'> </div>");
                // // $('#dis').html(data);
@@ -166,50 +211,46 @@ if($("#CatId").val() == "0"){
      //end of AddItem
      $('#submitAnswer').on('click',function(){
 
+    $("#start").prop('disabled', false);
       // User response to a question will be saved to brainstorm_responses table using following Ajax method. Call will be made to brainStormResponsesController's saveResponse() method 
 
       $.ajax({
 
-                type:'POST',
+                type:'get',
                 url:'/saveResponse',
-           data: {'brain_id':  $('#questionId').val(),'answer':'yourr answer','time':  $("#timer").text(),'user_id':123,'date':'10-2-1981', _token: '{{csrf_token()}}'},
+           data: {'brain_id': $('#questionId').val(),'answer':'yourr answer','time': $("#timer").text(),'user_id':123, _token: '{{csrf_token()}}'},
               
                success:function(data){
-                alert(data);
+                GetAnswer();
+               // alert(data);
               }
 
       });
+
    
     // In order to display User's response a call to SolutionController@displayAnswer will be made using following Ajax method and then results will be displayed
 
-$.ajax({
-                type:'GET',
-                url:'/displayAnswer',
-              data: {'time':  $("#timer").text(),'user_id':123,'question_id':  $('#questionId').val(), _token: '{{csrf_token()}}'},
-              
-               success:function(data){
-               $("#displayingBothCategoryAndItem").css('display','block');
-               
-              // after getting data from SolutionsController/displayAnswer I made a check to display both Categories and their associated ids
 
-               for(var i=0 ; i< data.length; i++){
-                 $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<b>"+data[i].title+"</b>");
-
-                 for(var j=0; j< data.length; j++){
-
-                  if(data[j].id == data[i].id){
-                     $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<hr /><p>"+data[i].content+"</p>");
-                  }
-                 }
-               
-               }
-                console.log(data[0]);
-                
-              
-                  }
-})
 
      })
+
+     $("#SystemReviewAnswwer").on('click',function(){
+
+            $.ajax({
+                type:'GET',
+                url:'/displaySystemAnswer',
+                 data: {'user_id':123,'question_id':  $('#questionId').val(), _token: '{{csrf_token()}}'},
+              
+               success:function(data){
+                
+                console.log(data);
+
+                $("#DisplayReviewSystemAnswer").css('display','block');
+                $("#ReviewSystemAnswerP").text(data[0].answer);
+               }
+             });
+
+     });
 
      
    });   // end of document.ready()
@@ -238,12 +279,21 @@ $.ajax({
 
 <div class="row card bg-warning mb-3 " style="width: 100%; margin: auto; display: none"  id="displayingBothCategoryAndItem">
   <div class='card bg-light mb-3' style='min-width:50%'>
-  <div class='card-header bg-warning text='red'><b>Answer</b></div>
+  <div class='card-header bg-warning text='red'><b>Answer</b> <a id="SystemReviewAnswwer" style="float: right" href="#">Review System Answer</a></div>
   <div class='card-body'>
 
+    
 </div>
 </div>
 
+<div class="row card bg-success mb-3 " style="width: 100%; margin: auto; display: none"  id="DisplayReviewSystemAnswer">
+  <div class='card bg-light mb-3' style='min-width:50%'>
+  <div class='card-header bg-success text='red'><b>System Review Answer</b></div>
+  <div class='card-body'>
+
+    <p class="label label-success" id="ReviewSystemAnswerP"></p>
+</div>
+</div>
 
 </div>
  </div>

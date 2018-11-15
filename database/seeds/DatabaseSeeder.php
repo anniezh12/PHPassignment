@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          $this->call(AllTablesSeeder::class);
+          $this->call(BrainstormAnswers::class);
+        
     }
 }

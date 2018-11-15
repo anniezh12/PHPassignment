@@ -17,7 +17,7 @@ class CreateBrainstormResponsesTable extends Migration
             $table->increments('id');
             $table->integer('brain_id');
             $table->longtext('answer');
-            $table->integer('time');
+            $table->text('time');
             $table->integer('user_id');
             $table->date('date');
             $table->timestamps();

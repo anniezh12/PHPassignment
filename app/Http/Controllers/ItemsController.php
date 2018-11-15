@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\item;
-
 class ItemsController extends Controller
 {
     
+
     
     public function submit(Request $request)
     {

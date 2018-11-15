@@ -25,9 +25,9 @@ Route::get('/dfd',function()
 	return view('dfd');
 });
 
-// Route::get('/solution',function(){
-// 	return view('solution');
-// });
+Route::get('/blog',function(){
+	return view('blog');
+});
 
 Route::get('/sol',function(){
 	return view('solution');
@@ -46,5 +46,9 @@ Route::post('/items/submit','ItemsController@submit');
 Route::get('/displayAnswer','SolutionController@displayAnswer');
 
 Route::get('/abc','QuestionsController@session_access');
+
+
 Route::get('/saveResponse','brainStormResponsesController@saveResponse');
 
+
+Route::get('/displaySystemAnswer','brainStormResponsesController@getResponse');
