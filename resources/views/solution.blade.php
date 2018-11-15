@@ -69,7 +69,8 @@ function incTimer() {
        // call to incTimer() will start a timer for a question
 totalSecs = 0;
         incTimer();
-
+ $("#DisplayReviewSystemAnswer").css('display','none');
+  $("#displayingBothCategoryAndItem").css('display','none');
         // call to gettingDate() will fetch current date to be inserted in the brainstorm_responses table
 
         //gettingDate();
@@ -165,29 +166,27 @@ function GetAnswer(){
               data: {'time':  $("#timer").text(),'user_id':123,'question_id':  $('#questionId').val(), _token: '{{csrf_token()}}'},
               
                success:function(data){
-                
+                console.log(data);
                $("#displayingBothCategoryAndItem").css('display','block');
-               var item = {};
+              // var item = [];
               // after getting data from SolutionsController/displayAnswer I made a check to display both Categories and their associated ids
 
-               for(var i=0 ; i< data.length; i++){
 
-          for (var a =0; a < item.length;a++)
-          {
-                if(){
-                      item[i]= data.title;
-                   $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<b>"+data[i].title+"</b>");
+$("#displayingBothCategoryAndItem > div:first-child > div:last-child ").empty();
+               for(var i=0 ; i< data[0].length; i++){
 
-                   for(var j=0; j< data.length; j++){
+        
 
-                    if(data[j].id == data[i].id){
-                       $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<hr /><p>"+data[i].content+"</p>");
+                   $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<b>"+ data[0][i].title +"</b>");
+
+                   for(var j=0; j< data[1].length; j++){
+
+                    if(data[0][i].id == data[1][j].category_id ){
+                       $('#displayingBothCategoryAndItem > div:first-child > div:last-child').append("<hr /><p>"+ data[1][j].content+"</p>");
                     }
                   }
                  }
-               }
-               }
-                console.log(data[0]);
+              
                 
               
                   }
@@ -286,7 +285,10 @@ function GetAnswer(){
 </div>
 </div>
 
-<div class="row card bg-success mb-3 " style="width: 100%; margin: auto; display: none"  id="DisplayReviewSystemAnswer">
+
+ </div>
+
+ <div class="row card bg-success" style="width: 100%; margin: auto; margin-top:40px; display: none"  id="DisplayReviewSystemAnswer">
   <div class='card bg-light mb-3' style='min-width:50%'>
   <div class='card-header bg-success text='red'><b>System Review Answer</b></div>
   <div class='card-body'>
@@ -296,7 +298,6 @@ function GetAnswer(){
 </div>
 
 </div>
- </div>
 @endsection
 
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">

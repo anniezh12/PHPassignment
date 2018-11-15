@@ -12,11 +12,15 @@ class SolutionController extends Controller
     public function displayAnswer(Request $request)
     {
 
-    	$answer = DB::table('categories')
-    	->join('items','items.category_id','=','categories.id')
-    	->select('categories.title','items.content', 'categories.id')
+    	$categories = DB::table('categories')
+    	    	->select('categories.title', 'categories.id')
         ->where("categories.question_id", "=",$request->question_id )
     	->get();
-    	return $answer;
+        $items = DB::table('items')
+                ->select('items.content', 'items.category_id')
+        ->where("items.question_id", "=",$request->question_id )
+        ->get();
+
+    	return [$categories,$items];
     }
 }
