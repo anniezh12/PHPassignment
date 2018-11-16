@@ -42,7 +42,7 @@ problem, answers it, reviews the system answer and then moves to the next
 problem)</li>
 <li> Allow the user to enter a text response(s) and categorize them. The user should be able
 to enter as many or few as they like
-<div id="mockBC">
+<div>
    (see mocks B and C below)
 </div>
 </li>

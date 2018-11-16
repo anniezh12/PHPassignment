@@ -33,7 +33,7 @@ $(function() {
         <a class="nav-link" href="/sol">TEST</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">BLOG</a>
+        <a class="nav-link disabled" href="/blog">BLOG</a>
       </li>
     </ul>
   </div>
