@@ -73,7 +73,7 @@ I also downloaded sublime text editor and open this project in it as shown in th
 
 <h3> Opening My Project using XAMPP </h3>
 <div class="margin-line">
-Make sure xmpp is turned on (Apache and MySQL are started) and all the Apache and MySQL are running.
+Make sure xampp is turned on (Apache and MySQL start button are clicked) and all the Apache and MySQL are running.
 simply go to browser and add localhos/ and it will show all the folders that are inside the ampps/www folder we can choose our project here to be run.
 </div>
    <img src="images/xampp-started.png" class="responsive ">
@@ -107,7 +107,7 @@ Routes can be defined/viewed in <code>routes/web.php</code> folder
 
 &lt; VirtualHost  *:80 &gt;<br>
   <br>  DocumentRoot  "C:/xampp/htdocs"
-   <br> ServerName localhost
+   <br> ServerName: localhost
  <br>&lt;VirtualHost &gt;
 
 </div>
@@ -121,12 +121,13 @@ and add the following
 127.0.0.1 localhost
 127.0.0.1 RBassignment.dev
 </div>
+
 <div class="margin-line">
 
-I then restarted Apache web server.
+I then restarted Apache web server and now was able to see my project using localhost/ in the web browser.
 </div>
 
-<h3> How to fix mysql stopped working issue</h3>
+<h3> How to fix MySQL stopped working Issue</h3>
 <div class="margin-line">
 
 I simply opened mysql configuration file and locate <code>[mysqlId] </code>and added the following line
@@ -136,7 +137,7 @@ I then turned mysql button on. It started running. I then removed the above line
 <h3>Starting Project</h3>
 <div style="margin:20px 0px ">
 In order to have all the JS functionality I needed Node Js which I installed <div class='btn btn-link'>https://nodejs.org/en/</div>.
-<img src="images/nodejs-install.png" class="responsice">
+<img src="images/nodejs-install.png" class="responsive">
 Then I restart my cmd(command prompt) and cd(changed directory to rbassignment1 project and checked if the Node has been sussessfully installed
 by typing <code>node --version</code> I got <code>version v10.13.0</code> as a result that means Node is there now I was able to install npm.
 <p>
