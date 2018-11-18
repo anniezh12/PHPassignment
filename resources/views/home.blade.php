@@ -45,7 +45,7 @@ recap of their answer and the actual answer)</li>
 </ol>
 ADDITIONAL NOTES
 1. User responses must be stored in a way that they can be retrieved again in the future at
-any time and displayed (as shown in mock D)
+any time and displayed
   </div>
  @endsection
 
