@@ -11,24 +11,12 @@
 <div class="jumbotron">
 	<b>CONTEXT</b>
 <br>
-A core part of this app's functionality is allowing candidates to drill themselves on case style
-interview questions.
-<br>As a result, displaying a question, saving the answer and showing the suggested answer is a
-key piece of functionality.<br> This functionality is used in many different permutations and styles
-across the app.
-<p>This challenge is designed to 
-	<ol>
-		<li> Give you a sense of the type of engineering work we do </li>
-		<li> See how you approach the work and </li>
-	    <li> Give both of us a sense of what it’s like to work together.</li>
-    </ol>	
-  </p>
 <b>GOAL</b>
 
 <ul>
 <li> Write code which can accomplish the requirements below, given the relevant database
 tables and reference files.</li>
-<li> Don’t stress & have fun!
+
 PRODUCT REQUIREMENTS</li>
 </ul>
 <ol >
@@ -49,15 +37,12 @@ to enter as many or few as they like
 <li> Allow the user to submi the answer, store the user’s response in the
 brainstorm_responses table, his/her user id, the time it took him/her to respond and the
 date</li>
-<li> Display the user’s answer back to him/her (mock D)</li>
-<li> Display the problem’s system answer back to him/her (mock E)</li>
+<li> Display the user’s answer back to him/her </li>
+<li> Display the problem’s system answer back to him/her</li>
 <li> All of the above should be accomplished on a single page (e.g., the user has a seamless
 experience of seeing a problem, providing an answer, submitting answers, seeing a
 recap of their answer and the actual answer)</li>
 </ol>
-<b>OUT OF SCOPE</b>
-1. You do not need to build a user creation / user log in flow -> you can make up a user
-and associated id (e.g., use with id=123)
 ADDITIONAL NOTES
 1. User responses must be stored in a way that they can be retrieved again in the future at
 any time and displayed (as shown in mock D)
